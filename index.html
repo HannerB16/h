@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Error iOS</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Roboto, sans-serif;
+      background-color: black;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 1.5em;
+      margin-bottom: 0.5em;
+    }
+
+    #countdown {
+      font-size: 3em;
+      font-weight: bold;
+      color: red;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .final-message {
+      font-size: 2em;
+      color: #00FF00;
+      margin-top: 20px;
+      animation: blink 0.8s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.1; }
+    }
+
+    .apple-logo {
+      font-size: 5em;
+      margin-bottom: 1em;
+    }
+
+    .warning {
+      font-size: 1em;
+      color: gray;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="apple-logo"></div>
+  <h1>iOS detectó un error grave</h1>
+  <p>El sistema se apagará en:</p>
+  <div id="countdown">30</div>
+  <p class="warning">No apagues el dispositivo ni cierres esta pantalla.</p>
+
+  <div id="finalMessage" class="final-message hidden">
+    😆 JAJAJA<br>Era solo una bromita 😅
+  </div>
+
+  <script>
+    let counter = 30;
+    const countdown = document.getElementById("countdown");
+    const finalMessage = document.getElementById("finalMessage");
+
+    const interval = setInterval(() => {
+      counter--;
+      if (counter <= 0) {
+        clearInterval(interval);
+        countdown.classList.add("hidden");
+        finalMessage.classList.remove("hidden");
+      } else {
+        countdown.textContent = counter;
+      }
+    }, 1000);
+
+    // Intento de bloqueo de navegación
+    window.onbeforeunload = function () {
+      return "iOS está procesando la corrección del error...";
+    };
+
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+      history.go(1);
+    };
+  </script>
+</body>
+</html>
